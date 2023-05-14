@@ -1,0 +1,135 @@
+---------------------------------------
+/* PROBLEM 1 - HARDWARE */
+---------------------------------------
+
+-- A -- TRUE
+-- B -- FALSE
+-- C -- TRUE
+-- D -- FALSE
+
+---------------------------------------
+/* PROBLEM 2 - DATA SYSTEMS FOR ANALYTICS */
+---------------------------------------
+
+-- QUESTION 2.A
+
+-- A -- FALSE
+-- B -- TRUE
+-- C -- TRUE
+-- D -- FALSE 
+
+
+-- QUESTION 2.B
+
+--................
+
+
+---------------------------------------
+/* PROBLEM 5 - SQL */
+---------------------------------------
+
+-- A --
+-- EXAMPLE OF DOING WHERE CLAUSES ON MIN/HR/SEC ETC. WITH EXTRACT
+SELECT COUNT(*) FROM songs
+WHERE EXTRACT(MINUTE FROM duration::TIME) <= 1;
+
+-- CONFIRMS CLUE:
+SELECT COUNT(*) FROM songs
+WHERE duration::INTERVAL <= '00:01:00'::INTERVAL;
+
+-- SOLUTION:
+SELECT COUNT(*) FROM songs
+WHERE duration:: INTERVAL > '01:00:00'::INTERVAL; --RETURNS 2
+
+-- B --
+-- APPROACH 1 : MANUAL CALCULATION
+SELECT
+    SUM(EXTRACT(HOUR FROM duration::interval) * 3600 +
+        EXTRACT(MINUTE FROM duration::interval) * 60 +
+        EXTRACT(SECOND FROM duration::interval)) AS dur_sec
+FROM songs; --RETURNS 3883371.000000
+
+-- APPROACH 2 : WITH EPOCH
+SELECT
+    SUM(EXTRACT(EPOCH FROM duration::interval)) AS total_duration_seconds
+FROM songs; --RETURNS 3883371.000000
+
+
+-- C --
+-- CONFIRMS CLUE:
+SELECT COUNT(*) FROM songs
+WHERE EXTRACT(YEAR FROM releasedate) = 1953; --RETURNS 5
+
+-- MORE CONFIRMATION:
+SELECT EXTRACT(YEAR FROM releasedate) AS yr, COUNT(*) AS song_count
+FROM songs
+GROUP BY EXTRACT(YEAR FROM releasedate)
+ORDER BY SONG_COUNT ASC; --RETURNS LIST OF RELEASE YEARS AND SONG COUNTS
+
+-- SOLUTION:
+SELECT MAX(song_count)
+FROM (
+	SELECT COUNT(*) AS song_count
+	FROM songs
+	GROUP BY EXTRACT(YEAR FROM releasedate)
+) AS sub_q; --RETURNS 833
+	
+-- D --
+-- CONFIRMS CLUE:
+SELECT COUNT(*) FROM albums
+INNER JOIN albumartists ON albums.albumid = albumartists.albumid
+INNER JOIN artists ON albumartists.artistid = artists.artistid
+WHERE artists.artist = 'Queen'; --RETURNS 12
+
+-- SOLUTION:
+SELECT COUNT(*) FROM albums
+INNER JOIN albumartists ON albums.albumid = albumartists.albumid
+INNER JOIN artists ON albumartists.artistid = artists.artistid
+WHERE artists.artist = 'Tom Waits'; --RETURN 24
+
+-- E --
+-- CONFIRMS CLUE:
+SELECT COUNT(DISTINCT ALBUMS.ALBUMID) AS CNT
+FROM ALBUMS
+INNER JOIN ALBUMGENRES ON ALBUMS.ALBUMID = ALBUMGENRES.ALBUMID
+INNER JOIN GENRES ON ALBUMGENRES.GENREID = GENRES.GENREID
+WHERE LEFT(GENRES.GENRE, 3) = 'Ele'; --RETURNS 187
+
+-- SOLUTION:
+SELECT COUNT(DISTINCT ALBUMS.ALBUMID) AS CNT
+FROM ALBUMS
+INNER JOIN ALBUMGENRES ON ALBUMS.ALBUMID = ALBUMGENRES.ALBUMID
+INNER JOIN GENRES ON ALBUMGENRES.GENREID = GENRES.GENREID
+WHERE LEFT(GENRES.GENRE, 3) = 'Alt'; --RETURNS 421
+
+-- F --
+-- SOLUTION:
+SELECT COUNT(*) AS TOTAL_DUP_SONGS FROM (
+  SELECT TITLE, COUNT(*) AS CNT
+  FROM SONGS
+  GROUP BY TITLE
+  HAVING COUNT(*) > 1
+) AS duplicates; --RETURNS 938
+
+
+-- G -- 
+-- CONFIRMS CLUE:
+SELECT COUNT(DISTINCT ALBUMS.ALBUMID) AS cnt
+FROM ALBUMS
+WHERE ALBUMS.ALBUMID NOT IN (
+  SELECT ALBUMID
+  FROM ALBUMGENRES
+  INNER JOIN GENRES ON ALBUMGENRES.GENREID = GENRES.GENREID
+  WHERE GENRES.GENRE = 'Rock' --RETURNS 1215
+);
+
+-- SOLUTION:
+SELECT COUNT(DISTINCT ALBUMS.ALBUMID) AS cnt
+FROM ALBUMS
+WHERE ALBUMS.ALBUMID NOT IN (
+  SELECT ALBUMID
+  FROM ALBUMGENRES
+  INNER JOIN GENRES ON ALBUMGENRES.GENREID = GENRES.GENREID
+  WHERE GENRES.GENRE = 'HipHop' --RETURNS 1278
+);
+ 

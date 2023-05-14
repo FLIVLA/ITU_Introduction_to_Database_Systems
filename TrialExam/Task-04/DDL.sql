@@ -1,0 +1,42 @@
+CREATE TABLE politician (
+    PID INT PRIMARY KEY
+);
+
+CREATE TABLE police (
+    LID INT PRIMARY KEY,
+    pay INT NOT NULL,
+    gets_payed_by INT NOT NULL,
+    FOREIGN KEY (gets_payed_by) REFERENCES politician(PID)
+);
+
+CREATE TABLE official (
+    OID INT PRIMARY KEY
+);
+
+CREATE TABLE civilian (
+    CID INT PRIMARY KEY
+);
+
+CREATE TABLE mistreats (
+    CID INT NOT NULL,
+    OID INT NOT NULL,
+    how VARCHAR(255) NOT NULL,
+    FOREIGN KEY (CID) REFERENCES civilian(CID),
+    FOREIGN KEY (OID) REFERENCES official(OID)
+);
+
+CREATE TABLE bribes (
+    PID INT NOT NULL,
+    OID INT NOT NULL,
+    when_date DATE NOT NULL,
+    why VARCHAR(255) NOT NULL,
+    FOREIGN KEY (PID) REFERENCES politician(PID),
+    FOREIGN KEY (OID) REFERENCES official(OID)
+);
+
+CREATE TABLE arrests (
+    LID INT NOT NULL,
+    CID INT NOT NULL,
+    FOREIGN KEY (LID) REFERENCES police(LID),
+    FOREIGN KEY (CID) REFERENCES civilian(CID)    
+);
