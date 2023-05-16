@@ -1,0 +1,43 @@
+Decomposing a relation, also known as table decomposition or splitting a table, 
+refers to the process of breaking down a single table into multiple 
+tables in a relational database. This is done as part of the normalization 
+process to eliminate redundancy and address data dependency issues.
+
+The decomposition process involves identifying functional dependencies 
+within the original table and creating new tables based on those dependencies. 
+Each new table represents a separate entity or concept within the database schema.
+
+The main reasons for decomposing a relation are:
+
+    --Eliminating redundancy: 
+    Redundancy occurs when the same data is repeated 
+    in multiple rows or columns of a table. By decomposing 
+    a relation, you can create separate tables for each distinct 
+    entity or concept, reducing redundancy and improving data storage efficiency.
+
+    --Addressing data dependency issues: 
+    Data dependency refers to the relationships 
+    between attributes or columns within a table. Uncontrolled 
+    dependencies can lead to anomalies, such as update, insertion, 
+    and deletion anomalies. Decomposing a relation allows you 
+    to identify and separate attributes with different dependencies, 
+    resulting in more robust and maintainable database design.
+
+    --Improving data integrity and query performance: 
+    Decomposing a relation according to the principles 
+    of normalization helps ensure data integrity and consistency. 
+    It enables more efficient querying and retrieval of data, 
+    as related information is stored in separate tables and 
+    can be accessed through appropriate relationships.
+
+During the decomposition process, you need to identify the primary key(s) of the original 
+table and determine the functional dependencies between the attributes. 
+By creating new tables based on these dependencies, you establish 
+appropriate relationships using primary and foreign keys.
+
+It's important to note that decomposition should be done carefully, 
+considering the specific requirements and constraints of the database 
+system and the nature of the data being stored. Over-decomposition or 
+excessive splitting of tables can lead to increased complexity, reduced 
+performance, and potential issues with data retrieval and maintenance. 
+Striking the right balance between normalization and practicality is essential.

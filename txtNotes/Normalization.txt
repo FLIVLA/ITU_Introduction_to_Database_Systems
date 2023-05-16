@@ -1,0 +1,43 @@
+Normalization in databases is the process of organizing and structuring 
+data in a relational database to eliminate redundancy, dependency issues, 
+and anomalies. It involves applying a set of rules called normal forms to 
+ensure data integrity, improve data quality, and optimize database design.
+
+The main goals of normalization are to:
+
+    --Minimize data redundancy: 
+    Redundancy occurs when the same 
+    data is stored multiple times in a database, 
+    leading to inefficiency, wasted storage space, 
+    and increased likelihood of data inconsistencies. 
+    Normalization aims to eliminate redundant data by breaking it 
+    into separate tables and establishing relationships between them.
+
+    --Reduce data dependency: 
+    Data dependency refers to the relationships between attributes or 
+    columns within a table. Uncontrolled dependencies can lead to 
+    data anomalies, such as update anomalies, insertion anomalies, 
+    and deletion anomalies. Normalization helps identify 
+    and eliminate these dependencies by distributing data 
+    across multiple tables and establishing appropriate relationships 
+    through primary and foreign keys.
+
+    --Improve data integrity: 
+    Normalization ensures that data is consistent, 
+    accurate, and reliable. By organizing data according to normal 
+    forms, it becomes less prone to inconsistencies and anomalies. 
+    Changes or updates to data are made in a controlled manner, 
+    preventing inconsistencies and maintaining data integrity.
+
+The normalization process typically involves analyzing the attributes, 
+relationships, and dependencies within a database schema, and then decomposing 
+the schema into multiple tables to adhere to the normal forms 
+(e.g., First Normal Form, Second Normal Form, Third Normal Form, etc.). 
+Each normal form introduces specific rules and criteria that 
+tables must meet to achieve a higher level of normalization.
+
+It's important to note that normalization is not a one-size-fits-all solution and should be 
+applied judiciously based on the specific requirements of the database and the 
+nature of the data being stored. Over-normalization or excessive splitting of 
+tables can lead to increased complexity and performance issues. Thus, 
+finding the right balance between normalization and practicality is crucial in database design.
