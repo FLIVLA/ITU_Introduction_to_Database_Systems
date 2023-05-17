@@ -41,3 +41,8 @@ applied judiciously based on the specific requirements of the database and the
 nature of the data being stored. Over-normalization or excessive splitting of 
 tables can lead to increased complexity and performance issues. Thus, 
 finding the right balance between normalization and practicality is crucial in database design.
+
+
+In a relational database, a weak entity is an entity that cannot be uniquely 
+identified by its attributes alone; therefore, it must use a foreign key 
+in conjunction with its attributes to create a primary key.
